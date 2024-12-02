@@ -1,0 +1,15 @@
+<p-table [value]="messages">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Content</th>
+        <th>Timestamp</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-message>
+      <tr>
+        <td>{{message.payload}}</td>
+        <td>{{message.receivedAt}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  

@@ -1,0 +1,35 @@
+<form [formGroup]="partnerForm" (ngSubmit)="addUser()">
+    <div>
+      <label for="alias">Alias</label>
+      <input id="alias" formControlName="alias" type="text">
+    </div>
+    <div>
+      <label for="type">Type</label>
+      <input id="type" formControlName="type" type="text">
+    </div>
+    <div>
+      <label for="direction">Direction</label>
+      <select id="direction" formControlName="direction">
+        <option value="INBOUND">INBOUND</option>
+        <option value="OUTBOUND">OUTBOUND</option>
+      </select>
+    </div>
+    <div>
+      <label for="application">Application</label>
+      <input id="application" formControlName="application" type="text">
+    </div>
+    <div>
+      <label for="processedFlowType">Processed Flow Type</label>
+      <select id="processedFlowType" formControlName="processedFlowType">
+        <option value="MESSAGE">MESSAGE</option>
+        <option value="ALERTING">ALERTING</option>
+        <option value="NOTIFICATION">NOTIFICATION</option>
+      </select>
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input id="description" formControlName="description" type="text">
+    </div>
+    <button type="submit" pButton label="Add User"></button>
+  </form>
+  

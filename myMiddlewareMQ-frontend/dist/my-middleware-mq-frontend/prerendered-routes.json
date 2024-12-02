@@ -1,0 +1,7 @@
+{
+  "routes": [
+    "/add-user",
+    "/messages",
+    "/users"
+  ]
+}

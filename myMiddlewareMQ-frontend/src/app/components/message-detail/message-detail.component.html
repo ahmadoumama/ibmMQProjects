@@ -1,0 +1,10 @@
+<p-dialog header="Message Details" [(visible)]="message">
+    <div *ngIf="message">
+      <p><strong>payload:</strong> {{message.payload}}</p>
+      <p><strong>receivedAt:</strong> {{message.receivedAt}}</p>
+    </div>
+    <p-footer>
+      <button type="button" pButton label="Cancel" (click)="closeDetail()"></button>
+    </p-footer>
+  </p-dialog>
+  

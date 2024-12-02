@@ -1,0 +1,7 @@
+# Ignorer les fichiers de dépendances
+node_modules/
+target/
+
+# Ignorer les fichiers de configuration sensibles
+.env
+*.log

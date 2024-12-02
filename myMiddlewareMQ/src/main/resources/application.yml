@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/payment_db
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+
+ibm:
+  mq:
+    queue-manager: QM1
+    channel: CHANNEL.NAME
+    connection-name-list: "localhost:1414"
+    user: mq_user
+    password: mq_password
+    queue: QUEUE.NAME

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mq: 
+    image: ibmcom/mq:latest 
+      container_name: my_mq 
+      ports: 
+        - "1414:1414" 
+        - "9443:9443"
+       environment: 
+         MQ_QMGR_NAME: QM1 
+         MQ_ADMIN_PASSWORD: test 
+         MQ_APP_PASSWORD: test 
+         depends_on: - db
+
+  backend:
+    build:
+      context: ./myMiddlewareMQ
+      dockerfile: Dockerfile
+    container_name: spring_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/test
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: test
+    depends_on:
+      - db
+      - md
+
+  frontend:
+    build:
+      context: ./myMiddlewareMQ-frontend
+      dockerfile: Dockerfile
+    container_name: angular_app
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
