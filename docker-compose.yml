@@ -15,18 +15,27 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  mq: 
-    image: ibmcom/mq:latest 
-      container_name: my_mq 
-      ports: 
-        - "1414:1414" 
-        - "9443:9443"
-       environment: 
-         MQ_QMGR_NAME: QM1 
-         MQ_ADMIN_PASSWORD: test 
-         MQ_APP_PASSWORD: test 
-         depends_on: - db
+  mq:
+    image: ibmcom/mq:latest
+    container_name: my_mq
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    environment:
+      - MQ_QMGR_NAME=QM1
+      - MQ_ADMIN_PASSWORD=test
+      - MQ_APP_PASSWORD=test
+    volumes:
+      - mq_data:/var/mqm
+    depends_on:
+      db:
+        condition: service_healthy
 
   backend:
     build:
@@ -39,9 +48,17 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/test
       SPRING_DATASOURCE_USERNAME: test
       SPRING_DATASOURCE_PASSWORD: test
+      IBM_MQ_HOST: mq
+      IBM_MQ_PORT: 1414
+      IBM_MQ_QMGR: QM1
+      IBM_MQ_CHANNEL: DEV.APP.SVRCONN
+      IBM_MQ_USER: app
+      IBM_MQ_PASSWORD: test
     depends_on:
-      - db
-      - md
+      db:
+        condition: service_healthy
+      mq:
+        condition: service_started
 
   frontend:
     build:
@@ -55,3 +72,4 @@ services:
 
 volumes:
   mysql_data:
+  mq_data:
