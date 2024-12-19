@@ -1,0 +1,39 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--surface-ground);
+}
+
+:host ::ng-deep {
+    .p-toolbar {
+        padding: 1rem 2rem;
+        background-color: var(--surface-card);
+    }
+
+    .p-button.p-button-text {
+        color: var(--primary-color);
+        
+        &:hover {
+            background: var(--primary-100);
+        }
+    }
+}

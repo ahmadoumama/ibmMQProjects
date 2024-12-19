@@ -1,28 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { PartnerService } from '../../services/partner.service';
-
-
+import { Partner } from '../../models/partner.interface';
 
 @Component({
   selector: 'app-partner-list',
   templateUrl: './partner-list.component.html',
-  styleUrl: './partner-list.component.scss'
+  styleUrls: ['./partner-list.component.scss']
 })
 export class PartnerListComponent implements OnInit {
-  partners: any[] = [];
+  partners: Partner[] = [];
 
   constructor(private partnerService: PartnerService) { }
 
   ngOnInit(): void {
-    this.partnerService.getUsers().subscribe(data => {
+    this.partnerService.getPartners().subscribe((data: Partner[]) => {
       this.partners = data;
     });
   }
 
   deleteUser(id: number): void {
-    this.partnerService.deleteUser(id).subscribe(() => {
+    this.partnerService.deletePartner(id).subscribe(() => {
       this.partners = this.partners.filter(partner => partner.id !== id);
     });
   }
 }
-

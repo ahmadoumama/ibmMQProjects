@@ -1,10 +1,36 @@
-<p-dialog header="Message Details" [(visible)]="message">
-    <div *ngIf="message">
-      <p><strong>payload:</strong> {{message.payload}}</p>
-      <p><strong>receivedAt:</strong> {{message.receivedAt}}</p>
+<div class="card">
+    <div class="flex justify-content-between mb-4">
+        <h2>Message Details</h2>
+        <p-button label="Back to List" icon="pi pi-arrow-left" (onClick)="goBack()"></p-button>
     </div>
-    <p-footer>
-      <button type="button" pButton label="Cancel" (click)="closeDetail()"></button>
-    </p-footer>
-  </p-dialog>
-  
+    
+    <div class="grid" *ngIf="message">
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label class="font-bold">ID:</label>
+                <div>{{message.id}}</div>
+            </div>
+        </div>
+        
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label class="font-bold">Queue Name:</label>
+                <div>{{message.queueName}}</div>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <div class="field">
+                <label class="font-bold">Message Content:</label>
+                <div>{{message.messageContent}}</div>
+            </div>
+        </div>
+        
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label class="font-bold">Timestamp:</label>
+                <div>{{message.timestamp | date:'medium'}}</div>
+            </div>
+        </div>
+    </div>
+</div>
